@@ -1,47 +1,96 @@
-import React from 'react';
+"use client"
 
-export default function Main() {
+import React from 'react';
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+export default function RegForm() {
+    const [firstName,SetFirstName]=useState('');
+    const [lastName,SetLastName]=useState('');
+    const [nid,SetNid]=useState('');
+    const [phone,SetPhone]=useState('');
+    const [email,SetEmail]=useState('');
+    const [password,SetPassword]=useState('');
+    const [confirmPassword,SetConfirmPassword]=useState('');
+    // const [isLoading,SetLoading]=useState(false);
+    const [passwordMatchError,SetPasswordMatchError]=useState(false);
+    const router = useRouter();
+
+    const submit=async (e)=> {
+        e.preventDefault();
+        // SetLoading(true);
+
+        if(password!=confirmPassword){
+            SetPasswordMatchError(true);
+            return;
+        }
+
+        const user={
+            nid,firstName,lastName,phone,email,password
+        }
+        console.log(JSON.stringify(user));
+        const response=await fetch('/api/RegForm',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify(user),
+        });
+        if(response.status===201){
+            router.refresh();
+            router.push('/login');
+        }
+    }
+
+
     return (
-        <main>
-            <div className="text-4xl text-center font-bold pt-20">
-                <h1>SignUp Here</h1>
-                <p className="text-blue-500 dark:text-blue-400"></p>
-                <hr className="w-48 h-1 mx-auto my-4 bg-blue-100 border-0 rounded md:my-10 dark:bg-blue-700" />
-                <p className="text-blue-500 dark:text-blue-400"></p>
-            </div>
+        <main> 
             <div className="w-1/2 border-blue-700 border-2 rounded-md mx-auto my-20">
                 <div className="flex items-center justify-center">
-                    <form className="py-10 flex-col">
+                    <form className="py-10 flex-col" onSubmit={submit}>
                         <div className="mb-4">
                             <label htmlFor="firstName" className="text-sm text-black float-left w-32">First Name</label>
-                            <input type="text" id="firstName" className="border border-blue-700 rounded p-1 text-sm flex-1" required />
+                            <input type="text" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
+                                value={firstName} onChange={(e) => SetFirstName(e.target.value)} />
                         </div>
                         <div className="mb-4">
                             <label htmlFor="lastName" className="text-sm text-black float-left w-32">Last Name</label>
-                            <input type="text" id="lastName" className="border border-blue-700 rounded p-1 text-sm flex-1" required />
-                        </div>
+                            <input type="text" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
+                                value={lastName} onChange={(e) => SetLastName(e.target.value)} />                        
+                            </div>
                         <div className="mb-4">
                             <label htmlFor="nid" className="text-sm text-black float-left w-32">National ID</label>
-                            <input type="text" id="nid" className="border border-blue-700 rounded p-1 text-sm flex-1" required />
-                        </div>
+                            <input type="number" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
+                                value={nid} onChange={(e) => SetNid(e.target.value)} />                          
+                            </div>
                         <div className="mb-4">
                             <label htmlFor="phone" className="text-sm text-black float-left w-32">Phone Number</label>
-                            <input type="text" id="phone" className="border border-blue-700 rounded p-1 text-sm flex-1" required />
-                        </div>
+                            <input type="text" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
+                                value={phone} onChange={(e) => SetPhone(e.target.value)} />                          
+                            </div>
                         <div className="mb-4">
                             <label htmlFor="email" className="text-sm text-black float-left w-32">Email</label>
-                            <input type="email" id="email" className="border border-blue-700 rounded p-1 text-sm flex-1" required />
-                        </div>
+                            <input type="email" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
+                                value={email} onChange={(e) => SetEmail(e.target.value)} />                          
+                            </div>
                         <div className="mb-4">
                             <label htmlFor="password" className="text-sm text-black float-left w-32">Password</label>
-                            <input type="password" id="password" className="border border-blue-700 rounded p-1 text-sm flex-1" required />
-                        </div>
+                            <input type="text" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
+                                value={password} onChange={(e) => SetPassword(e.target.value)} />                          
+                            </div>
                         <div className="mb-4">
                             <label htmlFor="confirmPassword" className="text-sm text-black float-left w-32">Confirm Password</label>
-                            <input type="password" id="confirmPassword" className="border border-blue-700 rounded p-1 text-sm flex-1" required />
-                        </div>
+                            <input type="text" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
+                                value={confirmPassword} onChange={(e) => SetConfirmPassword(e.target.value)} />                          
+                            </div>
                         <div className="flex items-center justify-center mb-4 pt-4">
-                            <button type="submit" className="bg-blue-500 text-white rounded-full p-2 w-40 hover:bg-blue-700">Sign Up</button>
+                            <button type="submit" className="bg-blue-500 text-white rounded-full p-2 w-40 hover:bg-blue-700">
+                            {/* disabled={isLoading} */}
+                                {/* {isLoading && <span>Wait...</span>}
+                                {!isLoading && <span>SignUp</span>} */}
+                                SignUp
+                            </button>
+                            <p className="flex items-center justify-center text-red-500 text-sm" disabled={passwordMatchError}>
+                                {passwordMatchError && <span>Password Do Not Macth</span>}
+                            </p>
                         </div>
                     </form>
                 </div>
