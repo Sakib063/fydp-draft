@@ -8,6 +8,7 @@ export default function RegForm() {
     const [firstName,SetFirstName]=useState('');
     const [lastName,SetLastName]=useState('');
     const [nid,SetNid]=useState('');
+    const [gender,SetGender]=useState('');
     const [phone,SetPhone]=useState('');
     const [email,SetEmail]=useState('');
     const [password,SetPassword]=useState('');
@@ -23,12 +24,12 @@ export default function RegForm() {
         if(password!=confirmPassword){
             SetPasswordMatchError(true);
             return;
-        }
+        };
 
         const user={
-            nid,firstName,lastName,phone,email,password
-        }
-        console.log(JSON.stringify(user));
+            nid,firstName,lastName,gender,phone,email,password
+        };
+        
         const response=await fetch('/api/RegForm',{
             method:'POST',
             headers:{'Content-Type':'application/json'},
@@ -55,32 +56,37 @@ export default function RegForm() {
                             <label htmlFor="lastName" className="text-sm text-black float-left w-32">Last Name</label>
                             <input type="text" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
                                 value={lastName} onChange={(e) => SetLastName(e.target.value)} />                        
-                            </div>
+                        </div>
                         <div className="mb-4">
                             <label htmlFor="nid" className="text-sm text-black float-left w-32">National ID</label>
                             <input type="number" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
                                 value={nid} onChange={(e) => SetNid(e.target.value)} />                          
-                            </div>
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="gender" className="text-sm text-black float-left w-32">Gender</label>
+                            <input type="text" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
+                                value={gender} onChange={(e) => SetGender(e.target.value)} />                          
+                        </div>
                         <div className="mb-4">
                             <label htmlFor="phone" className="text-sm text-black float-left w-32">Phone Number</label>
                             <input type="text" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
                                 value={phone} onChange={(e) => SetPhone(e.target.value)} />                          
-                            </div>
+                        </div>
                         <div className="mb-4">
                             <label htmlFor="email" className="text-sm text-black float-left w-32">Email</label>
                             <input type="email" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
                                 value={email} onChange={(e) => SetEmail(e.target.value)} />                          
-                            </div>
+                        </div>
                         <div className="mb-4">
                             <label htmlFor="password" className="text-sm text-black float-left w-32">Password</label>
                             <input type="password" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
                                 value={password} onChange={(e) => SetPassword(e.target.value)} />                          
-                            </div>
+                        </div>
                         <div className="mb-4">
                             <label htmlFor="confirmPassword" className="text-sm text-black float-left w-32">Confirm Password</label>
                             <input type="password" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
                                 value={confirmPassword} onChange={(e) => SetConfirmPassword(e.target.value)} />                          
-                            </div>
+                        </div>
                         <div className="flex items-center justify-center mb-4 pt-4">
                             <button disabled={isLoading} type="submit" className="bg-blue-500 text-white rounded-full p-2 w-40 hover:bg-blue-700">
                                 {isLoading && <span>Wait...</span>}

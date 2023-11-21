@@ -2,7 +2,6 @@ import React from 'react';
 import { useState } from "react";
 
 export default function Main() {
-    // const [data,setdata]=useState(' ');
     return (
         <main>
             <div className="text-4xl text-center font-bold pt-20">
