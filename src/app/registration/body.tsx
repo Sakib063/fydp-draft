@@ -12,13 +12,13 @@ export default function RegForm() {
     const [email,SetEmail]=useState('');
     const [password,SetPassword]=useState('');
     const [confirmPassword,SetConfirmPassword]=useState('');
-    // const [isLoading,SetLoading]=useState(false);
+    const [isLoading,SetLoading]=useState(false);
     const [passwordMatchError,SetPasswordMatchError]=useState(false);
     const router = useRouter();
 
     const submit=async (e)=> {
         e.preventDefault();
-        // SetLoading(true);
+        SetLoading(true);
 
         if(password!=confirmPassword){
             SetPasswordMatchError(true);
@@ -73,20 +73,18 @@ export default function RegForm() {
                             </div>
                         <div className="mb-4">
                             <label htmlFor="password" className="text-sm text-black float-left w-32">Password</label>
-                            <input type="text" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
+                            <input type="password" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
                                 value={password} onChange={(e) => SetPassword(e.target.value)} />                          
                             </div>
                         <div className="mb-4">
                             <label htmlFor="confirmPassword" className="text-sm text-black float-left w-32">Confirm Password</label>
-                            <input type="text" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
+                            <input type="password" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
                                 value={confirmPassword} onChange={(e) => SetConfirmPassword(e.target.value)} />                          
                             </div>
                         <div className="flex items-center justify-center mb-4 pt-4">
-                            <button type="submit" className="bg-blue-500 text-white rounded-full p-2 w-40 hover:bg-blue-700">
-                            {/* disabled={isLoading} */}
-                                {/* {isLoading && <span>Wait...</span>}
-                                {!isLoading && <span>SignUp</span>} */}
-                                SignUp
+                            <button disabled={isLoading} type="submit" className="bg-blue-500 text-white rounded-full p-2 w-40 hover:bg-blue-700">
+                                {isLoading && <span>Wait...</span>}
+                                {!isLoading && <span>SignUp</span>}
                             </button>
                             <p className="flex items-center justify-center text-red-500 text-sm" disabled={passwordMatchError}>
                                 {passwordMatchError && <span>Password Do Not Macth</span>}

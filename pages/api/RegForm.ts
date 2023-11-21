@@ -9,7 +9,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       phone,
       email,
       password,
-      confirmPassword
     } = req.body;
 
     const multichainConfig = {
@@ -29,8 +28,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       email,
       password,
     }};
-
-    const hex_data=Buffer.from(JSON.stringify(formData),'utf-8').toString('hex');
 
     fetch(`http://${multichainConfig.host}:${multichainConfig.port}`, {
       method: 'POST',
@@ -63,7 +60,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           },
           body: JSON.stringify({
             method: 'publish',
-            params: [streamName,'key1',formData],
+            params: [streamName,'patientinfo',formData],
           }),
         });
       })
@@ -74,9 +71,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           res.status(500).json({ message: 'Internal Server Error' });
           return Promise.reject('Internal Server Error');
         }
-
-        console.log('Data published to stream:', streamName);
-        res.status(201).json({ message: 'Form submitted successfully' });
       })
       .catch((error) => {
         console.error('Error interacting with Multichain:', error);
