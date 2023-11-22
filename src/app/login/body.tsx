@@ -8,7 +8,7 @@ function body(){
     const router = useRouter();
     const [nid, setNid] = useState('');
     const [password, setPassword] = useState('');
-    const [passwordError,setPasswordError]=useState(false);
+    const [Error,setError]=useState(false);
 
     const submit=async (e)=>{
         e.preventDefault();
@@ -24,6 +24,10 @@ function body(){
         if(response.status===201){
             router.refresh();
             router.push('/ViewConsent');
+        }
+        else{
+            setError(true);
+            return;
         }
     }
 
@@ -51,6 +55,9 @@ function body(){
             <p>Don't have an account? <a className="text-blue-700" href="/registration">Click Here</a> to sign up!</p>
             <p><a className="text-blue-700" href="">Forgot Password?</a></p>
             </div>
+            <p disabled={setError}>
+                {Error && <span>Error has occured. Check credentials</span>} 
+            </p>
         </div>
     </main>
   )
