@@ -9,6 +9,7 @@ export default function RegForm() {
     const [lastName,SetLastName]=useState('');
     const [nid,SetNid]=useState('');
     const [gender,SetGender]=useState('');
+    const [age,SetAge]=useState('');
     const [phone,SetPhone]=useState('');
     const [email,SetEmail]=useState('');
     const [password,SetPassword]=useState('');
@@ -27,7 +28,7 @@ export default function RegForm() {
         };
 
         const user={
-            nid,firstName,lastName,gender,phone,email,password
+            nid,firstName,lastName,gender,age,phone,email,password,
         };
         
         const response=await fetch('/api/RegForm',{
@@ -59,13 +60,18 @@ export default function RegForm() {
                         </div>
                         <div className="mb-4">
                             <label htmlFor="nid" className="text-sm text-black float-left w-32">National ID</label>
-                            <input type="number" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
+                            <input type="test" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
                                 value={nid} onChange={(e) => SetNid(e.target.value)} />                          
                         </div>
                         <div className="mb-4">
                             <label htmlFor="gender" className="text-sm text-black float-left w-32">Gender</label>
                             <input type="text" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
                                 value={gender} onChange={(e) => SetGender(e.target.value)} />                          
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="age" className="text-sm text-black float-left w-32">Age</label>
+                            <input type="text" className="border border-blue-700 rounded p-1 text-sm flex-1" required 
+                                value={age} onChange={(e) => SetAge(e.target.value)} />                          
                         </div>
                         <div className="mb-4">
                             <label htmlFor="phone" className="text-sm text-black float-left w-32">Phone Number</label>

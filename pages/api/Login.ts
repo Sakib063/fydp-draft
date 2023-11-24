@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-// import multichainConfig from './multichainConfig';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -9,12 +8,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const form_password=password.toString();
 
     const streamName = form_nid;
-    
+    const key = 'patientinfo';
+
     const multichainConfig = {
-      host: '127.0.0.1',
-      port: 9560,
-      rpcuser: 'multichainrpc',
-      rpcpassword: 'Tb7NRpdciy5s8Hb7YXM5QacNK8XkdsZG9yBaguVEcug',
+      host: process.env.HOST,
+      port: process.env.RPCPORT,
+      rpcuser: process.env.RPCUSER,
+      rpcpassword: process.env.RPCPASSWORD,
     };
 
     try {
@@ -27,8 +27,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           Authorization: 'Basic ' + Buffer.from(`${multichainConfig.rpcuser}:${multichainConfig.rpcpassword}`).toString('base64'),
         },
         body: JSON.stringify({
-          method: 'liststreamitems',
-          params: [streamName],
+          method: 'liststreamkeyitems',
+          params: [streamName,key],
         }),
       });
       if (!response.ok) {
@@ -40,7 +40,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const chain_password=JSON.stringify(chain_response.result[0].data.json.password).replace(/^"|"$/g, '');
 
       if(chain_nid===form_nid&&chain_password===form_password){
-        console.log('test');
         res.status(201).send();
       }
     } 

@@ -7,16 +7,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       lastName,
       nid,
       gender,
+      age,
       phone,
       email,
       password,
     } = req.body;
 
     const multichainConfig = {
-      host: '127.0.0.1',
-      port: 9560,
-      rpcuser: 'multichainrpc',
-      rpcpassword: 'Tb7NRpdciy5s8Hb7YXM5QacNK8XkdsZG9yBaguVEcug',
+      host: process.env.HOST,
+      port: process.env.RPCPORT,
+      rpcuser: process.env.RPCUSER,
+      rpcpassword: process.env.RPCPASSWORD,
     };
 
     const streamName = nid.toString();
@@ -26,6 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       lastName,
       nid,
       gender,
+      age,
       phone,
       email,
       password,

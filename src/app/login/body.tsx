@@ -23,7 +23,7 @@ function body(){
 
         if(response.status===201){
             router.refresh();
-            router.push('/ViewConsent');
+            router.push('/Consent');
         }
         else{
             setError(true);
@@ -34,7 +34,6 @@ function body(){
 
   return (
     <main>
-
         <div className="w-1/2 border-blue-700 border-2 rounded-md mx-auto my-20">
             <div className="flex items-center justify-center py-10 flex-col">
             <form className="py-10 flex-col" onSubmit={submit}>
@@ -55,9 +54,9 @@ function body(){
             <p>Don't have an account? <a className="text-blue-700" href="/registration">Click Here</a> to sign up!</p>
             <p><a className="text-blue-700" href="">Forgot Password?</a></p>
             </div>
-            <p disabled={setError}>
+            {/* <p disabled={setError}>
                 {Error && <span>Error has occured. Check credentials</span>} 
-            </p>
+            </p> */}
         </div>
     </main>
   )
